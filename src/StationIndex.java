@@ -1,11 +1,5 @@
-//import core.Line;
-//import core.Station;
-
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class StationIndex
 {
@@ -16,7 +10,7 @@ public class StationIndex
     @Expose
     TreeSet<Station> stations;
     @Expose
-    TreeMap<Station, TreeSet<Station>> connections;
+    TreeMap<Station, ConnectionStation> connections;
 
     public StationIndex()
     {
@@ -40,11 +34,10 @@ public class StationIndex
         for(Station station : stations)
         {
             if(!connections.containsKey(station)) {
-                connections.put(station, new TreeSet<>());
+                connections.put(station, new ConnectionStation());
             }
-            TreeSet<Station> connectedStations = connections.get(station);
-            connectedStations.addAll(stations.stream()
-                    .filter(s -> !s.equals(station)).collect(Collectors.toList()));
+            ConnectionStation connectedStations = connections.get(station);
+            connectedStations.addConnect(station, stations);
         }
     }
 
@@ -71,11 +64,14 @@ public class StationIndex
         return station.equals(query) ? station : null;
     }
 
-    public Set<Station> getConnectedStations(Station station)
+    public ConnectionStation getConnectedStations(Station station)
     {
         if(connections.containsKey(station)) {
             return connections.get(station);
         }
-        return new TreeSet<>();
+        return new ConnectionStation() {
+        };
     }
 }
+
+

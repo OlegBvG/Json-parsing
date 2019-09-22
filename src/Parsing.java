@@ -1,3 +1,4 @@
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -5,10 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
 
 
@@ -113,15 +111,16 @@ public class Parsing {
 
 
         System.out.println("\nПереходы Московского метро:");
-        Set<Map.Entry<Station, TreeSet<Station>>> setTree = stationIndex.connections.entrySet();
-        for (Map.Entry<Station, TreeSet<Station>> sT : setTree){
-            System.out.print(sT.getKey() + " => " + sT.getValue() + "\n");
+        Set<Map.Entry<Station, ConnectionStation>> setTree = stationIndex.connections.entrySet();
+
+        for (Map.Entry<Station, ConnectionStation> sT : setTree){
+            System.out.print(sT.getKey() + " => " + sT.getValue().getStations() + "\n");
         }
+
 
 //        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-//        try (FileWriter writer = new FileWriter("D:\\Skill\\IdeaProjects\\JsonParsing\\Data\\stationIndex.json")) {
         try (FileWriter writer = new FileWriter("..\\JsonParsing\\Data\\stationIndex.json")) {
             gson.toJson(stationIndex, writer);
         } catch (IOException e) {
@@ -130,7 +129,6 @@ public class Parsing {
 
         Gson gsonIn = new Gson();
 
-//        try (Reader reader = new FileReader("D:\\Skill\\IdeaProjects\\JsonParsing\\Data\\stationIndex.json")) {
         try (Reader reader = new FileReader("..\\JsonParsing\\Data\\stationIndex.json")) {
             StationIndex stInd = gsonIn.fromJson(reader, StationIndex.class);
             System.out.println(stInd);
@@ -138,7 +136,6 @@ public class Parsing {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
