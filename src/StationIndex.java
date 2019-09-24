@@ -4,13 +4,12 @@ import java.util.*;
 public class StationIndex
 {
 
-    @Expose
+    @Expose(serialize = true, deserialize = true)
     HashMap<String, Line> number2line;
-//    @Expose(serialize = true, deserialize = true)
-    @Expose
+    @Expose(serialize = true, deserialize = true)
     TreeSet<Station> stations;
-    @Expose
-    TreeMap<Station, ConnectionStation> connections;
+    @Expose(serialize = true, deserialize = false)
+    transient TreeMap<Station, ConnectionStation> connections;
 
     public StationIndex()
     {
@@ -33,11 +32,15 @@ public class StationIndex
     {
         for(Station station : stations)
         {
+
             if(!connections.containsKey(station)) {
                 connections.put(station, new ConnectionStation());
             }
+
             ConnectionStation connectedStations = connections.get(station);
+
             connectedStations.addConnect(station, stations);
+
         }
     }
 

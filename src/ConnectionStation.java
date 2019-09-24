@@ -5,11 +5,6 @@ import java.util.stream.Collectors;
 public class ConnectionStation {
 
     private TreeSet<Station> stationsCon;
-/*    public ConnectionStation(TreeSet stations)
-    {
-        this.stations = stations;
-    }
-*/
 
     public ConnectionStation()
     {
@@ -24,9 +19,10 @@ public class ConnectionStation {
         this.stationsCon = stations;
     }
 
-    public void addConnect(Station station, List<Station> stations_) {
-        stationsCon.addAll(stations_.stream()
-                .filter(s -> !s.equals(station)).collect(Collectors.toList()));
+    public void addConnect(Station station, List<Station> stationsList) {
+        stationsCon.addAll(stationsList.stream()
+                .filter(s -> 0!=s.compareTo(station)).collect(Collectors.toList()));
+
     }
 
 }

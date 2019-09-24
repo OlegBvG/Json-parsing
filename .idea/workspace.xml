@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0640dc5-c4f1-418d-8462-7d28e22936f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Lib/jackson-1.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ConnectionStation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/stationIndex.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/stationIndex.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JsonParsing/Parsing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JsonParsing/Parsing.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JsonParsing/StationIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JsonParsing/StationIndex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ConnectionStation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConnectionStation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parsing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parsing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StationIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StationIndex.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,6 +89,14 @@
       <option name="presentableId" value="Default" />
       <updated>1564596611074</updated>
     </task>
+    <task id="LOCAL-00001" summary="Replacement TreeSet at object">
+      <created>1569190624039</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569190624039</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -107,5 +114,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Replacement TreeSet at object" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replacement TreeSet at object" />
   </component>
 </project>

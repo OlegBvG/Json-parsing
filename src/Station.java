@@ -2,9 +2,7 @@ import com.google.gson.annotations.Expose;
 
 public class Station implements Comparable<Station>
 {
-//    @Expose
     private Line line;
-    @Expose
     private String name;
 
     public Station(String name, Line line)
@@ -45,4 +43,6 @@ public class Station implements Comparable<Station>
 //        return String.format("%s = %s", name, line);
         return name;
     }
+
+
 }

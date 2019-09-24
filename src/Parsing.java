@@ -1,4 +1,3 @@
-//import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -49,7 +48,7 @@ public class Parsing {
             }
 
 
-            if(numberLine != tempNumberLine) {
+            if (numberLine != tempNumberLine) {
                 stationIndex.addLine(new Line(numberLine, nameLine));
                 tempNumberLine = numberLine;
             }
@@ -68,33 +67,34 @@ public class Parsing {
                 nameStation = element.select("td:eq(1)").select("a:eq(0)").text();
             }
 
-                for (int i = 0; element.select("td:eq(3)").select("span:eq(" + i++ + ")").hasText();) {
+            for (int i = 0; element.select("td:eq(3)").select("span:eq(" + i++ + ")").hasText(); ) {
 
-                    nameStationTransition = element.select("td:eq(3)").select("span:eq(" + i++ + ")").attr("title");
+                nameStationTransition = element.select("td:eq(3)").select("span:eq(" + i++ + ")").attr("title");
 
-                    for (Station  s : stationIndex.stations){
-                        if (nameStationTransition.toUpperCase().contains(s.toString().toUpperCase())) nameStationTransition = s.toString();
+                for (Station s : stationIndex.stations) {
+                    if (nameStationTransition.toUpperCase().contains(s.toString().toUpperCase()))
+                        nameStationTransition = s.toString();
 
-                    }
-
-                    stationIndex.addConnection(new ArrayList<>(Arrays.asList(
-                            stationIndex.getStation(nameStation), stationIndex.getStation(nameStationTransition))));
-                    System.out.println(nameStationTransition + " --*");
                 }
+
+                stationIndex.addConnection(new ArrayList<>(Arrays.asList(
+                        stationIndex.getStation(nameStation), stationIndex.getStation(nameStationTransition))));
+                System.out.println(nameStationTransition + " --*");
+            }
         }
 
         System.out.println("\nЛинии Московского метро:");
         Set<Map.Entry<String, Line>> set = stationIndex.number2line.entrySet();
-        for(Map.Entry<String, Line> l : set) {
+        for (Map.Entry<String, Line> l : set) {
             System.out.print(l.getKey() + ": ");
             System.out.println(l.getValue().getName());
         }
 
         System.out.println("\nСтанции Московского метро:");
-        int countLine =0;
+        int countLine = 0;
         String numLine = "";
-        for (Station  s : stationIndex.stations){
-            if (countLine == 0)  numLine = s.getLine().getNumber();
+        for (Station s : stationIndex.stations) {
+            if (countLine == 0) numLine = s.getLine().getNumber();
             countLine++;
             if (!numLine.equals(s.getLine().getNumber())) {
                 System.out.println(numLine + " линия => " + countLine + " станций;");
@@ -113,15 +113,23 @@ public class Parsing {
         System.out.println("\nПереходы Московского метро:");
         Set<Map.Entry<Station, ConnectionStation>> setTree = stationIndex.connections.entrySet();
 
-        for (Map.Entry<Station, ConnectionStation> sT : setTree){
+        for (Map.Entry<Station, ConnectionStation> sT : setTree) {
             System.out.print(sT.getKey() + " => " + sT.getValue().getStations() + "\n");
         }
+
+        String toJson = "..\\JsonParsing\\Data\\stationIndex.json";
+        parsingJson(stationIndex, toJson);
+
+
+    }
+
+    public static void parsingJson(StationIndex stationIndex, String fileJson) throws IOException {
 
 
 //        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter writer = new FileWriter("..\\JsonParsing\\Data\\stationIndex.json")) {
+        try (FileWriter writer = new FileWriter(fileJson)) {
             gson.toJson(stationIndex, writer);
         } catch (IOException e) {
             e.printStackTrace();
@@ -129,13 +137,33 @@ public class Parsing {
 
         Gson gsonIn = new Gson();
 
-        try (Reader reader = new FileReader("..\\JsonParsing\\Data\\stationIndex.json")) {
-            StationIndex stInd = gsonIn.fromJson(reader, StationIndex.class);
-            System.out.println(stInd);
+        StationIndex stInd = null;
+        try (Reader reader = new FileReader(fileJson)) {
+            stInd = gsonIn.fromJson(reader, StationIndex.class);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        System.out.println("\nСтанции Московского метро из JSON - файла:");
+        int countLine = 0;
+        String numLine = "";
+        int countOut = 0;
+        for (Station s : stInd.stations) {
+            if (countLine == 0) numLine = s.getLine().getNumber();
+            countLine++;
+            if (!numLine.equals(s.getLine().getNumber())) {
+                System.out.println(numLine + " линия => " + countLine + " станций;");
+                countLine = 0;
+            }
+            System.out.println(s.getLine().getNumber() + " => линия: " + s.getLine().getName() + " => станция: " + s.getName());
+            countOut++;
+        }
+        System.out.println(numLine + " линия => " + countLine + " станций;");
+
+        System.out.println();
+        System.out.println("Количество станций из JSON - файла = " + countOut);
 
     }
 
